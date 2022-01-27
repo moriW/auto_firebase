@@ -2,4 +2,5 @@
 __pycache__/
 venv/
 *.csv
-*.json
+client_secret.json
+token.json
