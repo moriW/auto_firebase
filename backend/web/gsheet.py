@@ -28,6 +28,7 @@ def compelete_sheet():
         compelete_worksheet(wks, cred)
         return flask.jsonify({"status": "OK"})
     except Exception as e:
+        print(e)
         return flask.jsonify({"status": "ERROR", "msg": str(e)})
 
 
