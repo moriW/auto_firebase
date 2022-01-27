@@ -11,5 +11,8 @@
         "storage",
         "scripting",
         "notifications"
-    ]
+    ],
+    "action": {
+        "default_popup": "entry.html"
+    }
 }

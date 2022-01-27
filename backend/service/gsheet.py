@@ -6,6 +6,7 @@
 # @author: Mori
 #
 
+from itertools import chain
 import os
 import datetime
 
@@ -26,6 +27,13 @@ NAME_KEY = "名称"
 PIC_KEY = "配图链接"
 CATE_KEY = "配图"
 I18NS = ["de", "es", "fr", "pt", "ru"]
+I18N_MAP = {
+    "de": ["German"],
+    "es": ["Spanish(Mexico)", "Spanish(Spain)"],
+    "fr": ["French"],
+    "pt": ["Portuguese(Brazil)", "Portuguese(Portugal)"],
+    "ru": ["Russian"],
+}
 
 ALPHA_ASIC_START = 64
 DATETIME_FMT = "%Y/%m/%d"
@@ -129,6 +137,7 @@ def compelete_worksheet(worksheet: pygsheets.Worksheet, credentials: Credentials
             index + 2, values=update_values, col_offset=first_i18n_index
         )
 
+
 def parse_line_dict(line_dict: Dict) -> List[Dict]:
     push_date = line_dict[PUSHDATE_KEY]
     pic_url = line_dict[PIC_KEY]
@@ -138,20 +147,28 @@ def parse_line_dict(line_dict: Dict) -> List[Dict]:
             "push_date": push_date,
             "title": line_dict[f"{i18n_item}_title"],
             "desc": line_dict[f"{i18n_item}_desc"],
-            "lan": i18n_item,
+            "lan": {
+                "operation": "in",
+                "lan_list": I18N_MAP[i18n_item],
+            },
             "pic": pic_url,
-            "name": push_date + " / " + cate_name + " / " + i18n_item
-        } for i18n_item in I18NS
+            "name": push_date + " / " + cate_name + " / " + i18n_item,
+        }
+        for i18n_item in I18NS
     ] + [
         {
             "push_date": push_date,
             "title": line_dict[TITLE_KEY],
             "desc": line_dict[DESC_KEY],
-            "lan": "en",
+            "lan": {
+                "operation": "not in",
+                "lan_list": list(chain(I18N_MAP.values())),
+            },
             "pic": pic_url,
-            "name": push_date + " / " + cate_name + " / en"
+            "name": push_date + " / " + cate_name + " / en",
         }
     ]
+
 
 def reading_worksheet(worksheet: pygsheets.Worksheet):
     paresed_lines = []
