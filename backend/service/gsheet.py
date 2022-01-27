@@ -21,6 +21,8 @@ from google.cloud import translate_v2
 NOW = datetime.datetime.now()
 IS_CONFIG_KEY = "已配置"
 PUSHDATE_KEY = "发布日期"
+PUSHTIME_KEY = "发布时间"
+PUSH_TIMEZONE_KEY = "发布时区"
 TITLE_KEY = "标题"
 DESC_KEY = "描述"
 NAME_KEY = "名称"
@@ -139,12 +141,21 @@ def compelete_worksheet(worksheet: pygsheets.Worksheet, credentials: Credentials
 
 
 def parse_line_dict(line_dict: Dict) -> List[Dict]:
-    push_date = line_dict[PUSHDATE_KEY]
+    year, month, day = list(line_dict[PUSHDATE_KEY].split("/"))
+    hour, minute = list(line_dict[PUSHTIME_KEY].split(":"))
     pic_url = line_dict[PIC_KEY]
     cate_name = line_dict[CATE_KEY]
     return [
         {
-            "push_date": push_date,
+            "push_date": {
+                "year": year,
+                "month": month,
+                "day": day
+            },
+            "push_time": {
+                "hour": hour,
+                "minute": minute,
+            },
             "title": line_dict[f"{i18n_item}_title"],
             "desc": line_dict[f"{i18n_item}_desc"],
             "lan": {
@@ -152,7 +163,7 @@ def parse_line_dict(line_dict: Dict) -> List[Dict]:
                 "lan_list": I18N_MAP[i18n_item],
             },
             "pic": pic_url,
-            "name": push_date + " / " + cate_name + " / " + i18n_item,
+            "name": f"{month}-{day}"  + " / " + cate_name + " / " + i18n_item,
         }
         for i18n_item in I18NS
     ] + [
