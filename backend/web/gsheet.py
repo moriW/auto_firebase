@@ -36,8 +36,7 @@ def reading_sheet():
         cred = init_credentials()
         wks = read_wks_from_google_sheet(SHEET_ID, WKS_TITLE, cred)
         payload = {"status": "OK", "row": [], "total": 0}
-        for index, line_dict in reading_worksheet(wks):
-            payload["row"].append(line_dict)
+        payload["row"] = reading_worksheet(wks)
         payload["total"] = len(payload["row"])
         return flask.jsonify(payload)
     except Exception as e:

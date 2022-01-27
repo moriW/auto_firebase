@@ -9,11 +9,12 @@
 import os
 import datetime
 
+from typing import List, Dict
+
 import pygsheets
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import Flow
-
 from google.cloud import translate_v2
 
 NOW = datetime.datetime.now()
@@ -22,6 +23,8 @@ PUSHDATE_KEY = "发布日期"
 TITLE_KEY = "标题"
 DESC_KEY = "描述"
 NAME_KEY = "名称"
+PIC_KEY = "配图链接"
+CATE_KEY = "配图"
 I18NS = ["de", "es", "fr", "pt", "ru"]
 
 ALPHA_ASIC_START = 64
@@ -126,10 +129,33 @@ def compelete_worksheet(worksheet: pygsheets.Worksheet, credentials: Credentials
             index + 2, values=update_values, col_offset=first_i18n_index
         )
 
+def parse_line_dict(line_dict: Dict) -> List[Dict]:
+    push_date = line_dict[PUSHDATE_KEY]
+    pic_url = line_dict[PIC_KEY]
+    cate_name = line_dict[CATE_KEY]
+    return [
+        {
+            "push_date": push_date,
+            "title": line_dict[f"{i18n_item}_title"],
+            "desc": line_dict[f"{i18n_item}_desc"],
+            "lan": i18n_item,
+            "pic": pic_url,
+            "name": push_date + " / " + cate_name + " / " + i18n_item
+        } for i18n_item in I18NS
+    ] + [
+        {
+            "push_date": push_date,
+            "title": line_dict[TITLE_KEY],
+            "desc": line_dict[DESC_KEY],
+            "lan": "en",
+            "pic": pic_url,
+            "name": push_date + " / " + cate_name + " / en"
+        }
+    ]
 
 def reading_worksheet(worksheet: pygsheets.Worksheet):
-    payload = worksheet.get_all_records()
-    for index, line_dict in enumerate(payload):
+    paresed_lines = []
+    for line_dict in worksheet.get_all_records():
         try:
             pushdate = datetime.datetime.strptime(line_dict[PUSHDATE_KEY], DATETIME_FMT)
             assert pushdate > NOW
@@ -145,4 +171,16 @@ def reading_worksheet(worksheet: pygsheets.Worksheet):
             != 0
         ):
             continue
-        yield index, line_dict
+        paresed_lines.extend(parse_line_dict(line_dict))
+    return paresed_lines
+
+
+if __name__ == "__main__":
+    cred = init_credentials()
+    wks = read_wks_from_google_sheet(
+        sheet_id="1vXqHdA6RTD9cMMv8CvRQMW-jM9GSajAZOVcdJMwEFDM",
+        worksheet_title="lite填色通知配置记录2",
+        credentials=cred,
+    )
+    for data in reading_worksheet(wks):
+        print(data)
