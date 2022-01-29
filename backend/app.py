@@ -14,4 +14,4 @@ app = flask.Flask(__name__)
 
 build_router(app)
 
-app.run("0.0.0.0", 555, debug=True)
+# app.run("0.0.0.0", 555, debug=True)

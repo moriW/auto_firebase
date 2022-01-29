@@ -1,3 +1,3 @@
-docker build ./ -t auto_firebase
+docker build ./ -t autofirebase
 
-docker tag auto_firebase:latest auto_firebase:latest
+# docker tag autofirebase:latest autofirebase:latest

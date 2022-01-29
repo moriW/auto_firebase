@@ -4,7 +4,16 @@ WORKDIR /app
 
 COPY requirements.txt ./
 
-RUN pip3 install -r requirements.txt
+RUN apk add --no-cache \
+  g++ \
+  musl-dev \
+  libffi-dev
+
+RUN pip3 install -r requirements.txt --no-cache-dir \
+  && apk del \
+  g++ \
+  musl-dev \
+  libffi-dev
 
 COPY . .
 
