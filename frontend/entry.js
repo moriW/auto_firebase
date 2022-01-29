@@ -5,27 +5,40 @@ async function compelete() {
     let resp = await fetch('https://gsheet.moridisa.com/compelete_sheet');
     let resp_json = await resp.json()
     console.log(resp_json)
+    var li = document.createElement("li");
+    var i = document.createElement("i")
+    li.setAttribute("class", "list-group-item")
+
     if (resp_json.status === "OK") {
-        chrome.notifications.create(
-            "FCM noti",
-            {
-                iconUrl: "icon.png",
-                type: "basic",
-                title: "啵啵提醒你",
-                message: "shit 翻译完成",
-            },
-        )
-    } else {
-        chrome.notifications.create(
-            "FCM noti",
-            {
-                iconUrl: "icon.png",
-                type: "basic",
-                title: "啵啵提醒你",
-                message: "shit 翻译失败",
-            },
-        )
+        i.setAttribute("class", "bi-check-circle")
+        li.textContent = "Done"
     }
+    else {
+        i.setAttribute("class", "bi-x-circle")
+        li.textContent = "Failed"
+    }
+    li.appendChild(i)
+    document.getElementById("translate_card_body").appendChild(li)
+    //     chrome.notifications.create(
+    //         "FCM noti",
+    //         {
+    //             iconUrl: "icon.png",
+    //             type: "basic",
+    //             title: "啵啵提醒你",
+    //             message: "shit 翻译完成",
+    //         },
+    //     )
+    // } else {
+    //     chrome.notifications.create(
+    //         "FCM noti",
+    //         {
+    //             iconUrl: "icon.png",
+    //             type: "basic",
+    //             title: "啵啵提醒你",
+    //             message: "shit 翻译失败",
+    //         },
+    //     )
+    // }
 }
 
 async function autofill() {
