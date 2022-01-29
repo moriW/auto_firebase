@@ -1,7 +1,7 @@
 {
     "name": "Fuck FCM & google Shit",
     "description": "Build an Extension!",
-    "version": "1.0",
+    "version": "1.2",
     "manifest_version": 3,
     "host_permissions": [
         "http://*/*",
@@ -12,6 +12,11 @@
         "scripting",
         "notifications"
     ],
+    "icons": {
+        "16": "icon.png",
+        "48": "icon.png",
+        "128": "icon.png"
+    },
     "action": {
         "default_popup": "entry.html"
     }

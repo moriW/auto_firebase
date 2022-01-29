@@ -32,7 +32,7 @@ async function autofill() {
     let resp = await fetch('https://gsheet.moridisa.com/reading_sheet');
     let resp_json = await resp.json();
     console.log(resp_json)
-    await chrome.storage.sync.set({ 'fuck_fcm_resp': resp_json })
+    // await chrome.storage.sync.set({ 'fuck_fcm_resp': resp_json })
     let tabs = await chrome.tabs.query({ currentWindow: true, active: true })
     let tabId = tabs[0].id
     let result = await chrome.scripting.executeScript(
