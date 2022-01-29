@@ -296,7 +296,7 @@ async function inject_func(noti_list) {
         await sleep(1000)
 
         var options = document.getElementsByClassName("mat-option")
-        for (let index = 0; index < options.length; index ++){
+        for (let index = 0; index < options.length; index++) {
             let option = options.item(index)
             if (option.textContent.trim() == 'Enabled') {
                 option.click()
@@ -308,7 +308,7 @@ async function inject_func(noti_list) {
         document.getElementsByClassName("mat-select-value")[8].click()
         await sleep(1000)
         var options = document.getElementsByClassName("mat-option")
-        for (let index = 0; index < options.length; index ++){
+        for (let index = 0; index < options.length; index++) {
             let option = options.item(index)
             if (option.textContent.trim() == 'Enabled') {
                 option.click()
