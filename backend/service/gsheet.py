@@ -138,7 +138,7 @@ def compelete_worksheet(worksheet: pygsheets.Worksheet, credentials: Credentials
         worksheet.update_row(
             index + 2, values=update_values, col_offset=first_i18n_index
         )
-        print(index+2, update_values)
+        print(index + 2, update_values)
     # worksheet.sync()
 
 
@@ -148,20 +148,20 @@ def parse_line_dict(line_dict: Dict) -> List[Dict]:
     hour, minute = list(line_dict[PUSHTIME_KEY].split(":"))
     pic_url = line_dict[PIC_KEY]
     cate_name = line_dict[CATE_KEY]
+    return_date = {
+        "year": push_date.strftime("%Y"),
+        "month": {"str": push_date.strftime("%b").upper(), "int": push_date.month},
+        "day": str(push_date.day),
+    }
+    return_time = {
+        "hour": hour,
+        "minute": minute,
+    }
+    name_prefix = f"{push_date.month}-{push_date.day}" + " / " + cate_name
     return [
         {
-            "push_date": {
-                "year": push_date.strftime("%Y"),
-                "month": {
-                    "str": push_date.strftime("%b").upper(),
-                    "int": push_date.month
-                },
-                "day": str(push_date.day)
-            },
-            "push_time": {
-                "hour": hour,
-                "minute": minute,
-            },
+            "push_date": return_date,
+            "push_time": return_time,
             "title": line_dict[TITLE_KEY],
             "desc": line_dict[DESC_KEY],
             "lan": {
@@ -169,22 +169,12 @@ def parse_line_dict(line_dict: Dict) -> List[Dict]:
                 "lan_list": list(chain(*I18N_MAP.values())),
             },
             "pic": pic_url,
-            "name": f"{push_date.month}-{push_date.day}" + " / " + cate_name + " / en",
+            "name": name_prefix + " / en",
         }
     ] + [
         {
-            "push_date": {
-                "year": push_date.strftime("%Y"),
-                "month": {
-                    "str": push_date.strftime("%b").upper(),
-                    "int": push_date.month
-                },
-                "day": str(push_date.day)
-            },
-            "push_time": {
-                "hour": hour,
-                "minute": minute,
-            },
+            "push_date": return_date,
+            "push_time": return_time,
             "title": line_dict[f"{i18n_item}_title"],
             "desc": line_dict[f"{i18n_item}_desc"],
             "lan": {
@@ -192,7 +182,7 @@ def parse_line_dict(line_dict: Dict) -> List[Dict]:
                 "lan_list": I18N_MAP[i18n_item],
             },
             "pic": pic_url,
-            "name": f"{push_date.month}-{push_date.day}"  + " / " + cate_name + " / " + i18n_item,
+            "name": name_prefix + " / " + i18n_item,
         }
         for i18n_item in I18NS
     ]

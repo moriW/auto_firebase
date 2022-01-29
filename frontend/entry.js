@@ -59,8 +59,8 @@ async function inject_func(noti_list) {
     }
 
     for (let index = 0; index < noti_list.length; index++) {
+        now = Date.now()
         var noti = noti_list[index];
-        console.log(noti)
 
         // create new noti
         await document.getElementsByClassName("newCampaign")[0].click()
@@ -77,38 +77,39 @@ async function inject_func(noti_list) {
         document.getElementsByClassName("message-label")[0].dispatchEvent(new Event("input"));
 
         // next
-        document.getElementsByClassName("mat-stepper-next")[0].click()
         await sleep(0.8)
+        document.getElementsByClassName("mat-stepper-next")[0].click()
+        await sleep(1)
 
         // 触发选择app
         console.log("触发选择app")
         document.getElementsByClassName("mat-select-value")[1].click()
-        await sleep(0.8)
+        await sleep(0.3)
 
         // 选择第一个app
         console.log("选择第一个app")
         document.getElementsByClassName("mat-option")[0].click()
-        await sleep(0.8)
+        await sleep(0.3)
 
         // 添加第一个条件
         console.log("添加第一个条件")
         document.getElementsByClassName("and-button")[0].click()
-        await sleep(0.8)
+        await sleep(0.3)
 
         // 触发添加条件
         console.log("触发添加条件")
         document.getElementsByTagName("fire-rx-targeting-options")[1].children[0].click()
-        await sleep(0.8)
+        await sleep(0.3)
 
         // 选择语言条件
         console.log("选择语言条件")
         document.getElementsByClassName("mat-menu-item")[1].click()
-        await sleep(0.8)
+        await sleep(0.3)
 
         // 触发选择语言
         console.log("触发选择语言")
         document.getElementsByClassName("mat-select-value")[3].click()
-        await sleep(0.8)
+        await sleep(0.3)
 
         // 选择语言
         var lans = document.getElementsByClassName("mat-option")
@@ -126,44 +127,44 @@ async function inject_func(noti_list) {
                 // await sleep(0.8)
             }
         }
-        await sleep(0.8)
+        await sleep(0.3)
         // 关闭弹框
         document.getElementsByClassName("cdk-overlay-backdrop")[0].click()
         await sleep(0.8)
 
         // 添加第二个app
         document.getElementsByClassName("add-app")[0].click()
-        await sleep(0.8)
+        await sleep(0.3)
 
         // 触发选择第二个app
         console.log("触发选择第二个app")
         document.getElementsByClassName("mat-select-value")[4].click()
-        await sleep(0.8)
+        await sleep(0.3)
 
         // 选择第二个app
         console.log("选择第二个app")
         document.getElementsByClassName("mat-option")[0].click()
-        await sleep(0.8)
+        await sleep(0.3)
 
         // 添加第二套的条件
         console.log("添加第二套的条件")
         document.getElementsByClassName("and-button")[2].click()
-        await sleep(0.8)
+        await sleep(0.3)
 
         // 触发第二套的添加语言
         console.log("触发第二套的添加语言")
         document.getElementsByTagName("fire-rx-targeting-options")[3].children[0].click()
-        await sleep(0.8)
+        await sleep(0.3)
 
         // 添加第二套语言条件
         console.log("添加第二套语言条件")
         document.getElementsByClassName("mat-menu-item")[1].click()
-        await sleep(0.8)
+        await sleep(0.3)
 
         // 触发选择语言
         console.log("触发选择语言")
         document.getElementsByClassName("mat-select-value")[6].click()
-        await sleep(0.8)
+        await sleep(0.3)
 
         // 选择语言
         var lans = document.getElementsByClassName("mat-option")
@@ -186,23 +187,24 @@ async function inject_func(noti_list) {
         await sleep(0.8)
 
         // next
-        document.getElementsByClassName("mat-stepper-next")[1].click()
         await sleep(0.8)
+        document.getElementsByClassName("mat-stepper-next")[1].click()
+        await sleep(1)
 
         // 触发时间选择
         console.log("触发时间选择")
         document.getElementsByTagName("fcm-datepicker")[0].getElementsByTagName("input")[0].click()
-        await sleep(0.8)
+        await sleep(0.3)
 
         // 选择时间
         console.log("选择时间")
         document.getElementsByClassName("mat-menu-item")[1].click()
-        await sleep(0.8)
+        await sleep(0.3)
 
         // 触发日期选择
         console.log("触发日期选择")
         document.getElementsByClassName("mat-calendar-period-button")[0].click()
-        await sleep(0.8)
+        await sleep(0.3)
 
         // 选年
         console.log("选年")
@@ -214,7 +216,7 @@ async function inject_func(noti_list) {
                 break
             }
         }
-        await sleep(0.8)
+        await sleep(0.3)
 
         // 选月
         console.log("选月")
@@ -226,7 +228,7 @@ async function inject_func(noti_list) {
                 break
             }
         }
-        await sleep(0.8)
+        await sleep(0.3)
 
         // 选日
         console.log("选日")
@@ -238,7 +240,7 @@ async function inject_func(noti_list) {
                 break
             }
         }
-        await sleep(0.8)
+        await sleep(0.3)
 
         // 输入时间
         console.log("输入时间")
@@ -261,7 +263,7 @@ async function inject_func(noti_list) {
                 break
             }
         }
-        await sleep(0.8)
+        await sleep(0.3)
 
         // next
         document.getElementsByClassName("mat-stepper-next")[2].click()
@@ -288,10 +290,10 @@ async function inject_func(noti_list) {
 
         document.getElementsByClassName("abt-message-options-form")[0].getElementsByTagName("input")[6].value = `${noti.push_time.hour}${noti.push_time.minute}`
         document.getElementsByClassName("abt-message-options-form")[0].getElementsByTagName("input")[6].dispatchEvent(new Event("input"));
-        await sleep(0.8)
+        await sleep(0.3)
 
         document.getElementsByClassName("mat-select-value")[7].click()
-        await sleep(0.8)
+        await sleep(0.3)
 
         var options = document.getElementsByClassName("mat-option")
         for (let index = 0; index < options.length; index++) {
@@ -301,10 +303,10 @@ async function inject_func(noti_list) {
                 break
             }
         }
-        await sleep(0.8)
+        await sleep(0.3)
 
         document.getElementsByClassName("mat-select-value")[8].click()
-        await sleep(0.8)
+        await sleep(0.3)
 
         var options = document.getElementsByClassName("mat-option")
         for (let index = 0; index < options.length; index++) {
@@ -314,19 +316,18 @@ async function inject_func(noti_list) {
                 break
             }
         }
-        await sleep(0.8)
+        await sleep(0.3)
 
         document.getElementsByClassName("badge-count-input")[0].value = 1
         document.getElementsByClassName("badge-count-input")[0].dispatchEvent(new Event("input"))
         // await sleep(0.8)
 
         document.getElementsByClassName("cta-bottom")[0].getElementsByTagName("button")[1].click()
-        await sleep(0.8)
+        await sleep(0.3)
 
-        // return
         document.getElementsByClassName("fire-dialog-actions")[0].getElementsByTagName("button")[1].click()
+        console.log(`完成第: ${index + 1}个 not自动化填写, 剩余: ${noti_list.length - 1 - index}个, 耗时: ${Date.now() - now}ms, 10s后开始下一条`)
         await sleep(10)
-
     }
     alert("Shift Bro, 填完了");
 
