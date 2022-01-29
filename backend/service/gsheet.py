@@ -6,10 +6,10 @@
 # @author: Mori
 #
 
-from itertools import chain
 import os
+import logging
 import datetime
-
+from itertools import chain
 from typing import List, Dict
 
 import pygsheets
@@ -42,6 +42,8 @@ DATETIME_FMT = "%Y/%m/%d"
 
 TOKEN_FILE, CLIENT_SECRET_FILE = "token.json", "client_secret.json"
 
+logger = logging.getLogger("gunicorn.glogging.Logger")
+
 
 def init_credentials():
     scopes = (
@@ -61,7 +63,7 @@ def init_credentials():
             CLIENT_SECRET_FILE, scopes=scopes, redirect_uri="urn:ietf:wg:oauth:2.0:oob"
         )
         auth_url, _ = flow.authorization_url(prompt="consent")
-        print(
+        logger.info(
             "Please go to this URL and finish the authentication flow: {}".format(
                 auth_url
             )
@@ -69,7 +71,7 @@ def init_credentials():
         code = input("Enter the authorization code: ")
         flow.fetch_token(code=code)
         creds = flow.credentials
-        print(flow.credentials.to_json())
+        logger.info(flow.credentials.to_json())
 
     with open(TOKEN_FILE, "w") as _f:
         _f.write(creds.to_json())
@@ -138,7 +140,7 @@ def compelete_worksheet(worksheet: pygsheets.Worksheet, credentials: Credentials
         worksheet.update_row(
             index + 2, values=update_values, col_offset=first_i18n_index
         )
-        print(index + 2, update_values)
+        logger.info(index + 2, update_values)
     # worksheet.sync()
 
 
@@ -218,4 +220,4 @@ if __name__ == "__main__":
         credentials=cred,
     )
     for data in reading_worksheet(wks):
-        print(data)
+        logger.info(data)
