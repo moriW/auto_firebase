@@ -2,7 +2,7 @@ let compeleteBtn = document.getElementById("compelete");
 let autofillBtn = document.getElementById("autofill");
 
 async function compelete() {
-    let resp = await fetch('https://gsheet.moridisa.com/compelete_sheet');
+    let resp = await fetch('https://gsheet.moridisa.com/autofirebase/compelete_sheet');
     let resp_json = await resp.json()
     console.log(resp_json)
     var li = document.createElement("li");
@@ -42,7 +42,7 @@ async function compelete() {
 }
 
 async function autofill() {
-    let resp = await fetch('https://gsheet.moridisa.com/reading_sheet');
+    let resp = await fetch('https://gsheet.moridisa.com/autofirebase/reading_sheet');
     let resp_json = await resp.json();
     console.log(resp_json)
     // await chrome.storage.sync.set({ 'fuck_fcm_resp': resp_json })
