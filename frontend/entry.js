@@ -54,7 +54,7 @@ async function autofill() {
                 "tabId": tabId
             },
             "func": inject_func,
-            "args": [resp_json.row]
+            "args": [resp_json.data.data.row]
         },
     )
 };
